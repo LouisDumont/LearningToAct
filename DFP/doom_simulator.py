@@ -5,6 +5,8 @@ from __future__ import print_function
 import sys
 import os
 
+# Test GitHub linkink works well
+
 #vizdoom_path = '../../../../toolboxes/ViZDoom_2017_03_31'
 #sys.path = [os.path.join(vizdoom_path,'bin/python3')] + sys.path
 
