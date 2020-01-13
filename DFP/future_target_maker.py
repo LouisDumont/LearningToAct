@@ -55,6 +55,7 @@ class FutureTargetMaker:
     def make_targets(self, indices, meas, rwrds, n_episode, meas_mean = None, meas_std = None):
         ''' Make targets of future values 
             Args:
+                indices = input stream of states?
             
             So we only do targets if at least min_num_targs future steps are available, and we replace with nan's any unavailable observations
             

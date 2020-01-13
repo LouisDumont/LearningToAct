@@ -11,7 +11,7 @@ def make_objective_indices_and_coeffs(temporal_coeffs, meas_coeffs):
     objective_indices = np.where(np.abs(objective_coeffs) > 1e-8)[0]
     return objective_indices, objective_coeffs[objective_indices]
 
-def make_array(shape=(1,), dtype=np.float32, shared=False, fill_val=None):  
+def make_array(shape=(1,), dtype=np.float32, shared=False, fill_val=None):
     np_type_to_ctype = {np.float32: ctypes.c_float,
                         np.float64: ctypes.c_double,
                         np.bool: ctypes.c_bool,

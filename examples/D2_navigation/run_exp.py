@@ -11,29 +11,29 @@ def main(main_args):
 	
 	## Target maker
 	target_maker_args = {}
-	target_maker_args['future_steps'] = [1,2,4,8,16,32]
-	target_maker_args['meas_to_predict'] = [0]
-	target_maker_args['min_num_targs'] = 3	
-	target_maker_args['rwrd_schedule_type'] = 'exp'
+	target_maker_args['future_steps'] = [1,2,4,8,16,32] # Offsets with which to predict the measurements
+	target_maker_args['meas_to_predict'] = [0]#, 1, 2] # Measurements that we aim to predict
+	target_maker_args['min_num_targs'] = 3	# Defines the minimum nb of available measurements needed to try evaluate a frame
+	target_maker_args['rwrd_schedule_type'] = 'exp' # Possible discount for future rewards
 	target_maker_args['gammas'] = []
-	target_maker_args['invalid_targets_replacement'] = 'nan'
+	target_maker_args['invalid_targets_replacement'] = 'nan' # Replacement for unavailable targets (when close to the end of experiment)
 	
 	## Simulator
 	simulator_args = {}
-	simulator_args['config'] = '../../maps/D2_navigation.cfg'
-	simulator_args['resolution'] = (84,84)
-	simulator_args['frame_skip'] = 4
+	simulator_args['config'] = '../../maps/D2_navigation.cfg' # defines some parameter (available buttons, game variables etc)
+	simulator_args['resolution'] = (84,84) # Resolution used for the images (?)
+	simulator_args['frame_skip'] = 4 # Take decisions and predict every n frames (?)
 	simulator_args['color_mode'] = 'GRAY'	
-	simulator_args['maps'] = ['MAP01']
+	simulator_args['maps'] = ['MAP01'] # Map on which to play 
 	simulator_args['switch_maps'] = False
 	#train
-	simulator_args['num_simulators'] = 8
+	simulator_args['num_simulators'] = 8 # Number of simulations to run in parallel (?)
 	
 	## Experience
 	# Train experience
 	train_experience_args = {}
-	train_experience_args['memory_capacity'] = 20000
-	train_experience_args['history_length'] = 1
+	train_experience_args['memory_capacity'] = 20000 # Number of observations to retain
+	train_experience_args['history_length'] = 1 # Number of frames taken as input when making a prediction
 	train_experience_args['history_step'] = 1
 	train_experience_args['action_format'] = 'enumerate'
 	train_experience_args['shared'] = False
@@ -50,19 +50,19 @@ def main(main_args):
 	agent_args = {}
 	
 	# agent type
-	agent_args['agent_type'] = 'advantage'
+	agent_args['agent_type'] = 'advantage' # Defines the kind of network used for the prediction
 	
 	# preprocessing
-	agent_args['preprocess_input_images'] = lambda x: x / 255. - 0.5
-	agent_args['preprocess_input_measurements'] = lambda x: x / 100. - 0.5
+	agent_args['preprocess_input_images'] = lambda x: x / 255. - 0.5 # Preprocessing to apply to the images
+	agent_args['preprocess_input_measurements'] = lambda x: x / 100. - 0.5 # Preprocessing to apply to measurements
 	targ_scale_coeffs = np.expand_dims((np.expand_dims(np.array([30.]),1) * np.ones((1,len(target_maker_args['future_steps'])))).flatten(),0)
-	agent_args['preprocess_input_targets'] = lambda x: x / targ_scale_coeffs
+	agent_args['preprocess_input_targets'] = lambda x: x / targ_scale_coeffs # targ_scale_coeffs is a simple array of 1
 	agent_args['postprocess_predictions'] = lambda x: x * targ_scale_coeffs
 		
 	# agent properties
-	agent_args['objective_coeffs_temporal'] = [0., 0. ,0. ,0.5, 0.5, 1.]
+	agent_args['objective_coeffs_temporal'] = [0., 0. ,0. ,0.5, 0.5, 1.] # Multiplicative factors for rewards (?)
 	agent_args['objective_coeffs_meas'] = [1.]
-	agent_args['random_exploration_schedule'] = lambda step: (0.02 + 145000. / (float(step) + 150000.))
+	agent_args['random_exploration_schedule'] = lambda step: (0.02 + 145000. / (float(step) + 150000.)) # epsilon for epsilon-greedy policy (?)
 	agent_args['new_memories_per_batch'] = 8
 	
 	# net parameters
