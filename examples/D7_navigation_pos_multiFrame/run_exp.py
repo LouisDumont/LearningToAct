@@ -33,8 +33,8 @@ def main(main_args):
 	# Train experience
 	train_experience_args = {}
 	train_experience_args['memory_capacity'] = 20000 # Number of observations to retain
-	train_experience_args['history_length'] = 30 # Number of frames taken as input when making a prediction
-	train_experience_args['history_step'] = 6
+	train_experience_args['history_length'] = 4 # Number of frames taken as input when making a prediction
+	train_experience_args['history_step'] = 8
 	train_experience_args['action_format'] = 'enumerate'
 	train_experience_args['shared'] = False
 	
