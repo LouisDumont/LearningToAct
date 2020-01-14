@@ -40,7 +40,7 @@ def main(main_args):
 	
 	# Test prediction experience
 	test_prediction_experience_args = train_experience_args.copy()
-	test_prediction_experience_args['memory_capacity'] = 1
+	test_prediction_experience_args['memory_capacity'] = 100
 	
 	# Test policy experience
 	test_policy_experience_args = train_experience_args.copy()
