@@ -7,6 +7,8 @@ from .doom_simulator import DoomSimulator
 class MultiDoomSimulator:
 	
 	def __init__(self, all_args):
+
+		print('|| Creating MultiDoomSimulator object')
 		
 		self.num_simulators = len(all_args)
 		self.simulators = []

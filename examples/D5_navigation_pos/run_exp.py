@@ -60,8 +60,8 @@ def main(main_args):
 	agent_args['postprocess_predictions'] = lambda x: x * targ_scale_coeffs
 		
 	# agent properties
-	agent_args['objective_coeffs_temporal'] = [0., 0. ,0. ,0.5, 0.5, 1.] # Multiplicative factors for rewards (?)
-	agent_args['objective_coeffs_meas'] = [1., 0., 0.]
+	agent_args['objective_coeffs_temporal'] = [0., 0. ,0. ,0.5, 0.5, 1.] # Multiplicative factors for rewards accross predicted time steps
+	agent_args['objective_coeffs_meas'] = [1., 0., 0.] # Weights of means for reward
 	agent_args['random_exploration_schedule'] = lambda step: (0.02 + 145000. / (float(step) + 150000.)) # epsilon for epsilon-greedy policy (?)
 	agent_args['new_memories_per_batch'] = 8
 	

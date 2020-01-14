@@ -18,7 +18,7 @@ class FutureTargetMaker:
                 min_num_targs - minimum number of targets we want to have (matters when close to the end of the episode), non-available targets replaced by NANs 
                 meas_to_predict - which of the measurements should go to the target
         '''
-
+        print('|| Creating FutureTargetMaker object')
         # params
         self.future_steps = np.array(sorted(args['future_steps'])).astype(np.uint32)
         self.meas_to_predict = np.array(args['meas_to_predict']).astype(np.uint32)

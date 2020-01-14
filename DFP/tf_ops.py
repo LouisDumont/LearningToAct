@@ -69,3 +69,37 @@ def fc_net(data, params, name, last_linear = False, return_layers = [-1], msra_c
 
 def flatten(data):
     return tf.reshape(data, [-1, np.prod(data.get_shape().as_list()[1:])])
+
+def lstm(input_, output_size, name='lstm_layer', msra_coeff=1):
+    shape = input_.get_shape().as_list()
+
+    with tf.variable_scope(name):
+        w = tf.get_variable("w", [shape[1], output_size], tf.float32,
+                                tf.random_normal_initializer(stddev=msra_coeff * msra_stddev(input_, 1, 1)))
+        b = tf.get_variable("b", [output_size], initializer=tf.constant_initializer(0.0))
+        return tf.matmul(input_, w) + b
+
+'''def lstm_net(data, params, name, msra_coeff=1):
+    print('Using lstm')
+    data = data # tf.keras.layers.Flatten()
+    shape = data.get_shape().as_list()
+    print('SHAPE:', shape)
+    print('DATA:', data)
+    layers = []
+    #layers.append(lstm(data, params, name='lstm_layer1', msra_coeff=msra_coeff))
+    lstm_layer = tf.keras.layers.LSTM(64, input_shape=shape, stateful=True) # shape[-1]
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.LSTM(64, input_shape= shape, batch_input_shape=[64]+shape, stateful=True))
+    print(model.summary())
+    out = (lstm_layer(tf.keras.layers.Flatten()(data))) # np.array([data]) # tf.keras.layers.Flatten()
+    layers.append(out)
+    return layers[0]'''
+
+def lstm_net(data, params, name, msra_coeff=1):
+    output_dim = data.get_shape().as_list()
+    print('IN SHAPE:', tf.expand_dims(data, 0))
+    #res = tf.keras.layers.Dense(output_dim[-1])(data)
+    res = tf.keras.layers.LSTM(output_dim[-1], stateful=True)(tf.expand_dims(data, 0)) # data of np.array([data]) ?
+    print('RES SHAPE:', res.shape)
+    return res
+

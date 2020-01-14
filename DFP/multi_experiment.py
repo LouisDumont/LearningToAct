@@ -6,6 +6,7 @@ from .multi_experience_memory import MultiExperienceMemory
 from .future_predictor_agent_basic import FuturePredictorAgentBasic
 from .future_predictor_agent_advantage import FuturePredictorAgentAdvantage
 from .future_predictor_agent_advantage_nonorm import FuturePredictorAgentAdvantageNoNorm
+from .future_predictor_agent_LSTM import FuturePredictorAgentLSTM
 from . import defaults
 import tensorflow as tf
 import scipy.misc
@@ -23,6 +24,7 @@ class MultiExperiment:
                        agent_args={},
                        experiment_args={}):
         
+        print('|| Creating MultiExperiment object')
         # set default values
         target_maker_args = my_util.merge_two_dicts(defaults.target_maker_args, target_maker_args)
         if isinstance(simulator_args, dict):
@@ -92,12 +94,15 @@ class MultiExperiment:
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.1)  # avoid using all gpu memory
         self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options,log_device_placement=False))
 
+        print('|| Creating Agent')
         if self.agent_type == 'basic':
             self.ag = FuturePredictorAgentBasic(self.sess, agent_args)
         elif self.agent_type == 'advantage':
             self.ag = FuturePredictorAgentAdvantage(self.sess, agent_args) # inital design: concat meas and img, then 2 branches for adv and val
         elif self.agent_type == 'advantage_nonorm':
             self.ag = FuturePredictorAgentAdvantageNoNorm(self.sess, agent_args) # no normalizatio in the advantage stream
+        elif self.agent_type == 'lstm':
+            self.ag = FuturePredictorAgentLSTM(self.sess, agent_args) # no normalizatio in the advantage stream
         else:
             raise Exception('Unknown agent type', self.agent_type)
         
