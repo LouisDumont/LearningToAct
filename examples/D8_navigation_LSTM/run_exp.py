@@ -27,7 +27,7 @@ def main(main_args):
 	simulator_args['maps'] = ['MAP01'] # Map on which to play 
 	simulator_args['switch_maps'] = False
 	#train
-	simulator_args['num_simulators'] = 8 # Number of simulations to run in parallel (?)
+	simulator_args['num_simulators'] = 16 # Number of simulations to run in parallel (?)
 	
 	## Experience
 	# Train experience
