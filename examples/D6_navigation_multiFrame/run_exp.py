@@ -33,16 +33,18 @@ def main(main_args):
 	# Train experience
 	train_experience_args = {}
 	train_experience_args['memory_capacity'] = 20000 # Number of observations to retain
-	train_experience_args['history_length'] = 1 # Number of frames taken as input when making a prediction
+	train_experience_args['history_length'] = 4 # Number of frames taken as input when making a prediction (?)
 	train_experience_args['history_step'] = 1
 	train_experience_args['action_format'] = 'enumerate'
 	train_experience_args['shared'] = False
 	
 	# Test prediction experience
+	# ALL THESE ARGUMENTS ARE NEVER USED
 	test_prediction_experience_args = train_experience_args.copy()
 	test_prediction_experience_args['memory_capacity'] = 1
 	
 	# Test policy experience
+	# Expend explicitely mentionned, same as train_experience_policy
 	test_policy_experience_args = train_experience_args.copy()
 	test_policy_experience_args['memory_capacity'] = 55000
 		

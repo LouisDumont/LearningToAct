@@ -59,7 +59,9 @@ class MultiExperiment:
             self.multi_simulator =MultiDoomSimulator(simulator_args)
         else:
             # if we have to replicate a single simulator
+            # Create as many simulators as indicated by the num_simulator arg
             self.multi_simulator = MultiDoomSimulator([simulator_args] * simulator_args['num_simulators'])
+            
         agent_args['discrete_controls'] = self.multi_simulator.discrete_controls
         agent_args['continuous_controls'] = self.multi_simulator.continuous_controls
 
@@ -78,6 +80,7 @@ class MultiExperiment:
             for ns in range(self.train_experience.history_length):
                 agent_args['meas_for_net'] += [i + self.multi_simulator.num_meas * ns for i in experiment_args['meas_for_net']] # we want these measurements from all timesteps
             agent_args['meas_for_net'] = np.array(agent_args['meas_for_net'])
+            print('Agent args:', agent_args)
         else:
             agent_args['meas_for_net'] = np.arange(self.train_experience.state_meas_shape[0])
         if len(experiment_args['meas_for_manual']) > 0:

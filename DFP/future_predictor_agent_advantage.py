@@ -46,6 +46,7 @@ class FuturePredictorAgentAdvantage(Agent):
         # make a loss function and compute some summary numbers
         
         per_target_loss = my_ops.mse_ignore_nans(pred_relevant, targets_preprocessed, reduction_indices=0)
+        print('per_target_loss', per_target_loss)
         loss = tf.reduce_sum(per_target_loss)
         
         # compute objective value, just for logging purposes
@@ -66,7 +67,7 @@ class FuturePredictorAgentAdvantage(Agent):
         #self.per_target_loss = tf.get_variable('avg_targets', [self.target_dim], initializer=tf.constant_initializer(value=0.))
         
         full_loss = loss
-        errs_to_print = [loss]
+        errs_to_print = [loss] # loss # per_target_loss
         short_summary = [loss_sum]
         detailed_summary = per_target_loss_sums + [obj_sum]
         

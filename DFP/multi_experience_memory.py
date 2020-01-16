@@ -19,6 +19,7 @@ class MultiExperienceMemory:
                 - observations come in sequentially, and there is a terminal state in the end of each episode
                 - every episode is shorter than the memory
         '''
+        print('||Creating MultiExperimentMemory Object')
 
         # params
         self.capacity = int(args['memory_capacity'])
@@ -26,6 +27,11 @@ class MultiExperienceMemory:
         self.history_step = int(args['history_step'])
         self.shared = args['shared']
         self.obj_shape = args['obj_shape']
+        print('||MultiExperimentMemoryParams:')
+        print('Capacity:', self.capacity)
+        print('history_lenght:', self.history_length)
+        print('history_steps:', self.history_step)
+        print('obj_shape:', self.obj_shape)
         
         self.num_heads = int(multi_simulator.num_simulators)
         self.target_maker = target_maker
@@ -194,6 +200,8 @@ class MultiExperienceMemory:
             
         state_imgs = np.transpose(np.reshape(np.take(self._images, frames, axis=0), (len(indices),) + self.state_imgs_shape), [0,2,3,1]).astype(np.float32)
         state_meas = np.reshape(np.take(self._measurements, frames, axis=0), (len(indices),) + self.state_meas_shape).astype(np.float32)
+        print('shape of state_meas', state_meas.shape)
+        print('shape of state img', state_img.sshape)
         return state_imgs, state_meas
             
     def get_current_state(self):
