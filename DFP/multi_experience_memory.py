@@ -201,7 +201,7 @@ class MultiExperienceMemory:
         state_imgs = np.transpose(np.reshape(np.take(self._images, frames, axis=0), (len(indices),) + self.state_imgs_shape), [0,2,3,1]).astype(np.float32)
         state_meas = np.reshape(np.take(self._measurements, frames, axis=0), (len(indices),) + self.state_meas_shape).astype(np.float32)
         print('shape of state_meas', state_meas.shape)
-        print('shape of state img', state_img.sshape)
+        print('shape of state img', state_imgs.shape)
         return state_imgs, state_meas
             
     def get_current_state(self):
