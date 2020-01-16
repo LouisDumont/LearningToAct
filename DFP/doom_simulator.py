@@ -133,7 +133,7 @@ class DoomSimulator:
                 img = raw_img
                 
             meas = state.game_variables # this is a numpy array of game variables specified by the scenario
-            print(meas)
+            #print(meas)
             
         term = self._game.is_episode_finished() or self._game.is_player_dead()
         
