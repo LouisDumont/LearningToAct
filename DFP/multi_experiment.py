@@ -61,12 +61,14 @@ class MultiExperiment:
             # if we have to replicate a single simulator
             # Create as many simulators as indicated by the num_simulator arg
             self.multi_simulator = MultiDoomSimulator([simulator_args] * simulator_args['num_simulators'])
-            
+
         agent_args['discrete_controls'] = self.multi_simulator.discrete_controls
         agent_args['continuous_controls'] = self.multi_simulator.continuous_controls
 
         agent_args['objective_indices'], agent_args['objective_coeffs'] = my_util.make_objective_indices_and_coeffs(agent_args['objective_coeffs_temporal'],
-                                                                                                                    agent_args['objective_coeffs_meas']) 
+                                                                                                                    agent_args['objective_coeffs_meas'])
+        print('agent_args[\'objective_indices\']', agent_args['objective_indices'])
+        print('agent_args[\'objective_coeffs\']', agent_args['objective_coeffs'])
 
         train_experience_args['obj_shape'] = (len(agent_args['objective_coeffs']),)
         test_policy_experience_args['obj_shape'] = (len(agent_args['objective_coeffs']),)

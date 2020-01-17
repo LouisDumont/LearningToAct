@@ -67,7 +67,7 @@ class FuturePredictorAgentAdvantage(Agent):
         #self.per_target_loss = tf.get_variable('avg_targets', [self.target_dim], initializer=tf.constant_initializer(value=0.))
         
         full_loss = loss
-        errs_to_print = [loss] # loss # per_target_loss
+        errs_to_print = [per_target_loss] # loss # per_target_loss
         short_summary = [loss_sum]
         detailed_summary = per_target_loss_sums + [obj_sum]
         
@@ -86,6 +86,11 @@ class FuturePredictorAgentAdvantage(Agent):
         
         self.curr_predictions = predictions[:,:,self.objective_indices]*curr_objective_coeffs[:,None,:]
         self.curr_objectives = np.sum(self.curr_predictions, axis=2)
+        print('Predictions', predictions)
+        print('Objective Indices', self.objective_indices)
+        print('curr_objective_coeffs', curr_objective_coeffs)
+        print('Curr predictions', self.curr_predictions)
+        print('Curr objective', self.curr_objectives)
         
         curr_action = np.argmax(self.curr_objectives, axis=1)
         return curr_action
