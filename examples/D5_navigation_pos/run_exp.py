@@ -27,7 +27,7 @@ def main(main_args):
 	simulator_args['maps'] = ['MAP01'] # Map on which to play 
 	simulator_args['switch_maps'] = False
 	#train
-	simulator_args['num_simulators'] = 7 # Number of simulations to run in parallel (?)
+	simulator_args['num_simulators'] = 8 # Number of simulations to run in parallel (?)
 	
 	## Experience
 	# Train experience
@@ -55,7 +55,7 @@ def main(main_args):
 	# preprocessing
 	agent_args['preprocess_input_images'] = lambda x: x / 255. - 0.5 # Preprocessing to apply to the images
 	agent_args['preprocess_input_measurements'] = lambda x: x / 100. - 0.5 # Preprocessing to apply to measurements
-	targ_scale_coeffs = np.expand_dims((np.expand_dims(np.array([30.,7.5]),1) * np.ones((1,len(target_maker_args['future_steps'])))).flatten(),0) # addapt dim to meas?
+	targ_scale_coeffs = np.expand_dims((np.expand_dims(np.array([30.,10000]),1) * np.ones((1,len(target_maker_args['future_steps'])))).flatten(),0) # addapt dim to meas?
 	agent_args['preprocess_input_targets'] = lambda x: x / targ_scale_coeffs # targ_scale_coeffs is a simple array of 1
 	agent_args['postprocess_predictions'] = lambda x: x * targ_scale_coeffs
 		
