@@ -50,7 +50,7 @@ def main(main_args):
 	agent_args = {}
 	
 	# agent type
-	agent_args['agent_type'] = 'lstm' # Defines the kind of network used for the prediction
+	agent_args['agent_type'] = 'advantage'#'lstm' # Defines the kind of network used for the prediction
 	
 	# preprocessing
 	agent_args['preprocess_input_images'] = lambda x: x / 255. - 0.5 # Preprocessing to apply to the images
