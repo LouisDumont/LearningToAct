@@ -12,7 +12,7 @@ def main(main_args):
 	## Target maker
 	target_maker_args = {}
 	target_maker_args['future_steps'] = [1,2,4,8,16,32] # Offsets with which to predict the measurements
-	target_maker_args['meas_to_predict'] = [0,1,2]#, 1, 2] # Measurements that we aim to predict
+	target_maker_args['meas_to_predict'] = [0,1,2,3]#, 1, 2] # Measurements that we aim to predict
 	target_maker_args['min_num_targs'] = 3	# Defines the minimum nb of available measurements needed to try evaluate a frame
 	target_maker_args['rwrd_schedule_type'] = 'exp' # Possible discount for future rewards
 	target_maker_args['gammas'] = []
@@ -27,7 +27,7 @@ def main(main_args):
 	simulator_args['maps'] = ['MAP01'] # Map on which to play 
 	simulator_args['switch_maps'] = False
 	#train
-	simulator_args['num_simulators'] = 16 # Number of simulations to run in parallel (?)
+	simulator_args['num_simulators'] = 8 # Number of simulations to run in parallel (?)
 	
 	## Experience
 	# Train experience
@@ -55,13 +55,13 @@ def main(main_args):
 	# preprocessing
 	agent_args['preprocess_input_images'] = lambda x: x / 255. - 0.5 # Preprocessing to apply to the images
 	agent_args['preprocess_input_measurements'] = lambda x: x / 100. - 0.5 # Preprocessing to apply to measurements
-	targ_scale_coeffs = np.expand_dims((np.expand_dims(np.array([30., 10., 10.]),1) * np.ones((1,len(target_maker_args['future_steps'])))).flatten(),0)
+	targ_scale_coeffs = np.expand_dims((np.expand_dims(np.array([30., 100., 100., 100.]),1) * np.ones((1,len(target_maker_args['future_steps'])))).flatten(),0)
 	agent_args['preprocess_input_targets'] = lambda x: x / targ_scale_coeffs # targ_scale_coeffs is a simple array of 1
 	agent_args['postprocess_predictions'] = lambda x: x * targ_scale_coeffs
 		
 	# agent properties
 	agent_args['objective_coeffs_temporal'] = [0., 0. ,0. ,0.5, 0.5, 1.] # Multiplicative factors for rewards (?)
-	agent_args['objective_coeffs_meas'] = [1., 0., 0.]
+	agent_args['objective_coeffs_meas'] = [1., 0., 0., 0.]
 	agent_args['random_exploration_schedule'] = lambda step: (0.02 + 145000. / (float(step) + 150000.)) # epsilon for epsilon-greedy policy (?)
 	agent_args['new_memories_per_batch'] = 8
 	
@@ -105,7 +105,7 @@ def main(main_args):
 	experiment_args = {}
 	experiment_args['num_train_iterations'] = 820000
 	experiment_args['test_objective_coeffs_temporal'] = np.array([0., 0., 0., 0.5, 0.5, 1.])
-	experiment_args['test_objective_coeffs_meas'] = np.array([1., 0., 0.])
+	experiment_args['test_objective_coeffs_meas'] = np.array([1., 0., 0., 0.])
 	experiment_args['test_random_prob'] = 0.
 	experiment_args['test_checkpoint'] = 'checkpoints/2017_04_09_09_11_48'
 	experiment_args['test_policy_num_steps'] = 2000
