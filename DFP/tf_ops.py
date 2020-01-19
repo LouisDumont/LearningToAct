@@ -99,7 +99,8 @@ def lstm_net(data, params, name, msra_coeff=1):
     output_dim = data.get_shape().as_list()
     print('IN SHAPE:', tf.expand_dims(data, 0))
     #res = tf.keras.layers.Dense(output_dim[-1])(data)
-    res = tf.keras.layers.LSTM(output_dim[-1], stateful=True)(tf.expand_dims(data, 0)) # data of np.array([data]) ?
-    print('RES SHAPE:', res.shape)
-    return res
+    with tf.variable_scope(name)
+        res = tf.keras.layers.LSTM(output_dim[-1], stateful=True)(tf.expand_dims(data, 0)) # data or np.array([data]) ?
+        print('RES SHAPE:', res.shape)
+        return res
 
