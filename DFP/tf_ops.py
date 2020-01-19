@@ -102,5 +102,6 @@ def lstm_net(data, params, name, msra_coeff=1):
     with tf.variable_scope(name):
         #res = tf.keras.layers.LSTM(output_dim[-1], stateful=True)(tf.expand_dims(data, 0)) # data or np.array([data]) ?
         #print('RES SHAPE:', res.shape)
-        return tf.keras.layers.LSTM(output_dim[-1], stateful=True)(tf.expand_dims(data, 0))#res
+        #return tf.nn.rnn_cell.LSTMCell(output_dim[-1], reuse=True)(tf.expand_dims(data, 0))#res # keras.layers.LSTM(stateful=True) or keras.layers.LSTMCell(reuse=True?
+        return tf.keras.layers.CuDNNLSTM(output_dim[-1], stateful=True)(tf.expand_dims(data, 0))
 
